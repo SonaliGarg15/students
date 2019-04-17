@@ -1,0 +1,56 @@
+<button [routerLink]="'/onboardingform'">
+  On Boarding Form
+</button>
+<button [routerLink]="'/liststudents'">
+  List Students
+</button>
+
+
+
+
+<div class="jumbotron">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <form [formGroup]="onBoardingForm">
+              <div class="form-group">
+              <mat-form-field>
+                <input matInput placeholder="Student Name" formControlName="studentName">
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Category</mat-label>
+                <mat-select>
+                  <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="DOB">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput placeholder="Father's Name" formControlName="fathersName">
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput placeholder="Mother's Name" formControlName="mothersname">
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput placeholder="Last Class Score" formControlName="lastClassScore">
+              </mat-form-field>
+            </div>
+            </form>
+            
+          </div>
+      </div>
+  </div>
+</div>
