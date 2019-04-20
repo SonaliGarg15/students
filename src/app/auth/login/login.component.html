@@ -1,0 +1,26 @@
+<div class="container login-form-container">
+<div class="login">
+  <h3 class="login-header">Login</h3>
+  <form [formGroup]="loginForm" class="login-container" (ngSubmit)="login()">
+
+    <div class="form-group">
+      <mat-form-field class="form-field-width">
+        <input matInput placeholder="UserName" formControlName="userName">
+        <mat-error *ngIf="userName.errors">Username is required</mat-error>
+       </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field class="form-field-width">
+        <input matInput placeholder="Password" formControlName="password">
+        <mat-error *ngIf="password.errors">Password is required</mat-error>
+       </mat-form-field>
+    </div> 
+
+    <div class="form-group">
+      <button class="btn btn-primary login-button" type="submit">Login</button>
+      <button class="btn btn-primary register-button" (click)="redirectToRegister()">Register</button>
+    </div>
+  </form>
+</div>
+</div>
