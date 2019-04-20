@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DocumentValidator } from '../shared/validators/document.validator';
 import { categories, documents, CATEGORIES, DOMESTIC_MANADATORY_DOCUMENTS, INTERNATIONAL_MANADATORY_DOCUMENTS } from '../shared/constants';
 import { OnBoardingService } from '../shared/services/on-boarding.service';
@@ -14,20 +15,31 @@ export class OnBoardingComponent implements OnInit {
   onBoardingForm: FormGroup;  
   categories = categories;
   documents = documents;
+  isEditForm: boolean = false;
+  isViewForm: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, public onBoardingService: OnBoardingService) { }
+  constructor(private formBuilder: FormBuilder, public onBoardingService: OnBoardingService, private router: Router, private route: ActivatedRoute) {}
+
+  private addCheckboxes() {
+    this.documents.map((o, i) => {
+      const control = new FormControl(false); // if first item set to true, else false
+      (this.onBoardingForm.controls.documents as FormArray).push(control);
+    });
+  }
 
   ngOnInit() {
-    const formControls = this.documents.map(control => new FormControl(false));
     this.onBoardingForm = this.formBuilder.group({
+      studentId: [0],
       studentName: ['', Validators.required],
       category: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
       fathersName: ['', Validators.required],
       mothersName: ['', Validators.required],
       lastClassScore: ['', Validators.required],
-      documents: new FormArray(formControls)},
+      documents: new FormArray([])},
        { validator: DocumentValidator });
+       
+       this.addCheckboxes();
 
       this.onBoardingForm.get('category').valueChanges
       .subscribe(checkedValue => {
@@ -48,8 +60,61 @@ export class OnBoardingComponent implements OnInit {
             }     
         }
       });
+
+      let editAndViewFormData = this.onBoardingService.getEditAndViewStudentData();
+      if(editAndViewFormData != null){
+          this.onBoardingForm.patchValue({
+            studentId: editAndViewFormData.studentData.studentId,
+            studentName: editAndViewFormData.studentData.studentName,
+            category: editAndViewFormData.studentData.category ,
+            dateOfBirth: new Date(editAndViewFormData.studentData.dateOfBirth),
+             fathersName: editAndViewFormData.studentData.fathersName,
+             mothersName: editAndViewFormData.studentData.mothersName,       
+             lastClassScore: editAndViewFormData.studentData.lastClassScore
+           });    
+            
+        this.category.markAsDirty();
+        this.onBoardingForm.setControl('documents', this.setDocumentsInFormArray(editAndViewFormData.studentData.documents) );
+        if(editAndViewFormData.isFormDisabled){
+          this.isViewForm = true;
+          this.disableOnBoardingForm();
+        }
+        else{
+          this.isEditForm = true;          
+        }
+
+      }
+
   }
 
+  disableOnBoardingForm(){
+    this.onBoardingForm.get('studentName').disable();
+    this.onBoardingForm.get('category').disable();
+    this.onBoardingForm.get('dateOfBirth').disable();
+    this.onBoardingForm.get('fathersName').disable();
+    this.onBoardingForm.get('mothersName').disable();
+    this.onBoardingForm.get('lastClassScore').disable();
+    this.onBoardingForm.get('documents').disable();
+  }
+
+  setDocumentsInFormArray(documents){
+    let formArray = new FormArray([]);
+    formArray.controls = [];
+
+    documents.map((key, value) => {
+        let formControl = new FormControl(key);
+        (formArray as FormArray).push(formControl)
+    });
+    return formArray;
+  }
+
+  backToListView(){
+    this.router.navigate(['/onboard/students']);
+  }
+
+  get studentId(){
+    return this.onBoardingForm.get('studentId');
+  }
   get studentName() {
     return this.onBoardingForm.get('studentName');
   }
@@ -75,7 +140,11 @@ export class OnBoardingComponent implements OnInit {
   }
 
   onSubmit(){
+    if (this.onBoardingForm.invalid) {
+      return;
+    }
     this.onBoardingService.addNewStudent(this.onBoardingForm.value);
+    this.router.navigate(['/onboard/students']);
   }
 
 }

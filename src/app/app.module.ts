@@ -6,15 +6,21 @@ import { AppComponent } from './app.component';
 import { OnBoardingModule } from './on-boarding/on-boarding.module';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HeaderComponent } from './common/header/header.component';
+import { FooterComponent } from './common/footer/footer.component';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     OnBoardingModule,
+    AuthModule,
     MatInputModule,
     BrowserAnimationsModule
   ],

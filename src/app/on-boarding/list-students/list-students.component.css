@@ -1,0 +1,13 @@
+.example-card {
+    width: 300px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://png.pngtree.com/svg/20170424/c5d418ef9c.svg');
+    background-size: cover;
+  }
+
+  .layout-students{
+      display: inline-block;
+      margin: 20px;
+  }
