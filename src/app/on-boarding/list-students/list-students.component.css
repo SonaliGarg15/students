@@ -1,8 +1,9 @@
-.example-card {
+.student-card {
     width: 300px;
+    text-align: center;
   }
   
-  .example-header-image {
+  .student-header-image {
     background-image: url('https://png.pngtree.com/svg/20170424/c5d418ef9c.svg');
     background-size: cover;
   }
@@ -10,4 +11,30 @@
   .layout-students{
       display: inline-block;
       margin: 20px;
+  }
+
+  .filter-student-input{
+    float: right;
+  }
+
+  .students-container{
+    margin-top: 5%;
+  }
+
+  .filter-container{
+    margin-top: 10px;
+  }
+
+  .list-students-button{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .category-text{
+    text-align: center;
+  }
+
+  .no-record-found-text{
+    text-align: center;
+    font-size: 30px;
   }

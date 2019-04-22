@@ -7,16 +7,14 @@
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto" >
         <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/onboard/form']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">On Boarding Form</a>
+            <a class="nav-link" *ngIf="isLoggedIn===true" [routerLink]="['/onboard/form']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">On Boarding Form</a>
           </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/onboard/students']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">List Students</a>
+        <a class="nav-link" *ngIf="isLoggedIn===true" [routerLink]="['/onboard/students']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">List Students</a>
       </li>
       
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <label>{{userName}}</label>   
+      <label class="user-name-label">{{userName}}</label>   
       <button class="btn btn-secondary my-2 my-sm-0" *ngIf="isLoggedIn===true" (click)="logOutUser()">Logout</button>
-    </form>
   </div>
 </nav>

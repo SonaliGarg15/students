@@ -1,58 +1,50 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Student } from '../shared/interfaces/student';
 import { OnBoardingService } from '../shared/services/on-boarding.service';
 import { Router } from '@angular/router';
-import { OnBoardingFormEditAndView } from '../shared/interfaces/onboardingFormEditAndView';
 import { MatDialog } from '@angular/material';
 import { DeleteStudentModalComponent } from '../delete-student-modal/delete-student-modal.component';
+import { categories } from '../shared/constants';
 
 @Component({
   selector: 'app-list-students',
   templateUrl: './list-students.component.html',
   styleUrls: ['./list-students.component.css']
 })
+
 export class ListStudentsComponent implements OnInit {
   students: Student[];
- 
-  constructor(private onBoardingService: OnBoardingService, private router: Router, public dialog: MatDialog) {    
-  }
+  categories = categories;
+  noDataFound: boolean = false;
+
+  constructor(private onBoardingService: OnBoardingService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
-    const subs = this.onBoardingService.getStudents().subscribe(data => {
+    this.onBoardingService.getStudents().subscribe(data => {
+      if(data.length === 0){
+        this.noDataFound = true;
+      }
       this.students = data;
     });
   }
 
-  editStudentData(student){
-    let editFormData: OnBoardingFormEditAndView = {
-    isFormDisabled : false,
-    studentData : student
-    }
-    this.onBoardingService.setEditAndViewStudentData(editFormData);
-    this.router.navigate(['/onboard/form']);
+  editStudentData(student) {
+    this.router.navigate(['/onboard/edit', student.studentId]);
   }
 
-  viewStudentData(student){
-    let editFormData: OnBoardingFormEditAndView = {
-    isFormDisabled : true,
-    studentData : student
-    }
-    this.onBoardingService.setEditAndViewStudentData(editFormData);
-    this.router.navigate(['/onboard/form']);
+  viewStudentData(student) {
+    this.router.navigate(['/onboard/view', student.studentId]);
   }
 
-  openDialog(studentId: number): void {
-
+  openDeleteModal(studentId: number): void {
     const dialogRef = this.dialog.open(DeleteStudentModalComponent, {
-      width: '400px'
+      width: '300px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
-     if(result === true){
-       this.onBoardingService.deleteStudent(studentId);
-     }
+      if (result === true) {
+        this.onBoardingService.deleteStudent(studentId);
+      }
     });
   }
-
-
 }

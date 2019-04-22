@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   userName : string;
-  isLoggedIn : boolean = false;;
+  isLoggedIn : boolean = false;
 
   constructor(private authService: AuthService, private router: Router) { 
     authService.getLoggedInName.subscribe(name => this.changeName(name));

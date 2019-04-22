@@ -1,31 +1,39 @@
 <div class="container register-container">
   <div class="register">
     <h3 class="register-header">Register</h3>
-    <form [formGroup]="registerForm" class="register-container" (ngSubmit)="register()">
+    <form [formGroup]="registrationForm" class="register-container" (ngSubmit)="register()">
   
       <div class="form-group">
         <mat-form-field class="form-field-width">
           <input matInput placeholder="UserName" formControlName="userName">
-          <mat-error *ngIf="userName.errors">Username is required</mat-error>
+          <mat-error *ngIf="userName.errors?.required">Username is required</mat-error>
          </mat-form-field>
       </div>
 
       <div class="form-group">
         <mat-form-field class="form-field-width">
           <input matInput placeholder="Email" formControlName="email">
-          <mat-error *ngIf="email.errors">Email is required</mat-error>
+          <mat-error *ngIf="email.errors?.required">Email is required</mat-error>
+          <mat-error *ngIf="email.errors?.email">Email must be a valid email address</mat-error>
          </mat-form-field>
       </div>
   
       <div class="form-group">
         <mat-form-field class="form-field-width">
-          <input matInput placeholder="Password" formControlName="password">
-          <mat-error *ngIf="password.errors">Password is required</mat-error>
+          <input type="password" matInput placeholder="Password" formControlName="password">
+          <mat-error *ngIf="password.errors?.required">Password is required</mat-error>
+          <mat-error *ngIf="password.errors?.minlength">Password must be at least 6 characters</mat-error>
          </mat-form-field>
       </div> 
+
+      <p class="register-error" *ngIf="isRegistrationError===true">{{showRegistrationErrorMessage}}</p>
   
       <div class="form-group">
-        <button class="btn btn-primary" type="submit">Register</button>
+        <button class="btn btn-primary registration-button" type="submit" [disabled]="!registrationForm.valid">Register</button>
+        <button class="btn btn-primary registration-button" type="reset" [disabled]="!registrationForm.touched">Reset</button>
+        <div>
+            <a href="javascript:void(0)" (click)="redirectToLogin()">Back to Login</a>
+          </div>
       </div>
     </form>
   </div>

@@ -1,44 +1,32 @@
 .form-field-full-width {
     width: 100%;
   }
-
-  .example-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-  }
   
-  .example-margin {
-    margin: 0 10px;
-  }
-  .example-section {
+.document-margin {
+   margin: 0 10px;
+}
+
+.document-section {
     display: flex;
     align-content: center;
     align-items: center;
-    height: 60px;
-  }
-.asterisk-field{
+    height: 50px;
+}
+
+.asterisk-field {
     float: right;
     color: red;
 }
 
-.form-heading{
+.form-heading {
     text-align: center;
+    margin-top: 10px;
 }
 
-.form-container{
-    margin: 10px;
+.student-id-field {
+    display: none;
 }
 
-.mat-card {    
-    text-align: -webkit-center;    
-}    
-.mat-card {    
-    max-width: 80%;    
-    margin: 2em auto;    
-    text-align: center;    
-}    
-
-.mat-toolbar-row {    
-    justify-content: space-between;    
-} 
+.on-boarding-form-button {
+    margin-right: 30px;
+}

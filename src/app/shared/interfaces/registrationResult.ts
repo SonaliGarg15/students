@@ -1,4 +1,4 @@
 export interface RegistrationResult{
-    isregistrationSuccessFull: boolean,
-    userAlreadyExists: boolean
+    isregistrationSuccessFul: boolean,
+    errorMessage: string
 }

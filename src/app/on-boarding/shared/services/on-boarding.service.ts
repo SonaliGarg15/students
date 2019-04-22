@@ -1,113 +1,88 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-
-import { tap } from 'rxjs/operators';
 import { Student } from '../interfaces/student';
-import { elementStyleProp } from '@angular/core/src/render3';
-import { OnBoardingFormEditAndView } from '../interfaces/onboardingFormEditAndView';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OnBoardingService {
+  studentsDataKey: string = "studentsData";
   students$: BehaviorSubject<Student[]> = new BehaviorSubject([]);
   studentId$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
 
-  editAndViewStudentData$: BehaviorSubject<OnBoardingFormEditAndView> = new BehaviorSubject<OnBoardingFormEditAndView>(null);
+  constructor() { }
 
-  constructor(private http: HttpClient) { }
-
+  /**
+   * get all the students from the local storage
+   */
   getStudents() {
-    let key = 'studentsData';
     if (this.students$.value.length === 0) {
-      let studentsData = JSON.parse(localStorage.getItem(key));
-      this.students$.next(studentsData);
+      if (localStorage.hasOwnProperty(this.studentsDataKey)) {
+        let studentsData = JSON.parse(localStorage.getItem(this.studentsDataKey));
+        this.students$.next(studentsData);
+      }
     }
-
     return this.students$;
   }
 
-  addNewStudent(student: Student) {
-    let key = "studentsData";
-    let studentsDataPresent = localStorage.hasOwnProperty(key);
+  /**
+   * add new student in local storage
+   * @param student 
+   */
+  addStudent(student: Student) {
+    let studentsDataPresent = localStorage.hasOwnProperty(this.studentsDataKey);
     let studentsData = [];
-    if (student.studentId === 0) {
-      if (studentsDataPresent === false) {
-        student.studentId = 1;
+    if (studentsDataPresent === false) {
+      student.studentId = 1; // this is the first student, set student id to 1
+    }
+    else {
+      studentsData = JSON.parse(localStorage.getItem(this.studentsDataKey));
+      if (studentsData.length !== 0) {
+        student.studentId = studentsData[studentsData.length - 1].studentId + 1; //set the student id, one greater than the last student added id
       }
       else {
-        studentsData = JSON.parse(localStorage.getItem(key));
-        student.studentId = studentsData.length + 1;
+        student.studentId = 1; // if studentsData array is empty, set the student id to 1
       }
+    }
 
-      studentsData.push(student);
-      localStorage.setItem(key, JSON.stringify(studentsData));
-    }
-    else{
-      studentsData = JSON.parse(localStorage.getItem(key));
-      let x;
-      for (let index = 0; index < studentsData.length; index++) {
-        const element = studentsData[index];
-        if(element.id === student.studentId){
-          x = index;
-          break;
-        } 
-      }
-      studentsData.splice(x, 1);
-      studentsData.push(student);
-      localStorage.setItem(key, JSON.stringify(studentsData));
-    }
+    studentsData.push(student);
+    localStorage.setItem(this.studentsDataKey, JSON.stringify(studentsData));
     this.students$.next(studentsData);
   }
 
-  setStudentId(studentId: number) {
-    this.studentId$.next(studentId);
+  /**
+   * update the student
+   * @param student 
+   */
+  updateStudent(student: Student) {
+    let studentsData = JSON.parse(localStorage.getItem(this.studentsDataKey));
+    let objIndex = studentsData.findIndex((obj => obj.studentId === student.studentId));// find the index of student using student id
+    studentsData[objIndex] = student;
+    localStorage.setItem(this.studentsDataKey, JSON.stringify(studentsData));
+    this.students$.next(studentsData);
   }
 
-  getStudentId() {
-    return this.studentId$.value;
+  /**
+   * get student by id from the local storage
+   * @param id 
+   */
+  getStudentById(id) {
+    let studentsData = JSON.parse(localStorage.getItem(this.studentsDataKey));
+    let studentId = parseInt(id);
+    let objIndex = studentsData.findIndex((obj => obj.studentId === studentId)); // find the index of student using student id
+    return studentsData[objIndex];
   }
 
-  getStudentById(id: number): Student {
-    let key = 'studentsData';
-    let studentsData = JSON.parse(localStorage.getItem(key));
-    var student;
-
-    for (let index = 0; index < studentsData.length; index++) {
-      if (studentsData[index].studentId === id) {
-        student = studentsData[index];
-        break;
-      }
-    }
-    return student;
-  }
-
-  setEditAndViewStudentData(formData: OnBoardingFormEditAndView) {
-    this.editAndViewStudentData$.next(formData);
-  }
-
-  getEditAndViewStudentData() {
-    var retVal = this.editAndViewStudentData$.getValue();
-    this.editAndViewStudentData$.next(null);
-    return retVal;
-  }
-
-  deleteStudent(studentId){
-    let key = 'studentsData';
-    let studentsData = JSON.parse(localStorage.getItem(key));
-    let deleteIndex = null;
-
-    for (let index = 0; index < studentsData.length; index++) {
-      if (studentsData[index].studentId === studentId) {
-        deleteIndex = index;
-        break;
-      }
-    }
-    if(deleteIndex !== null){
+  /**
+   * delete student from the local storage using student id
+   * @param studentId 
+   */
+  deleteStudent(studentId) {
+    let studentsData = JSON.parse(localStorage.getItem(this.studentsDataKey));
+    let deleteIndex = studentsData.findIndex((obj => obj.studentId === studentId)); // find the index of student using student id
+    if (deleteIndex !== null) {
       studentsData.splice(deleteIndex, 1);
-      localStorage.setItem(key, JSON.stringify(studentsData));
+      localStorage.setItem(this.studentsDataKey, JSON.stringify(studentsData));
     }
     this.students$.next(studentsData);
   }

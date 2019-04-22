@@ -10,6 +10,15 @@
     margin-top: 5%;
 }
 
-.login-button, .register-button{
+.login-button, .reset-button{
     margin: 30px;
 }
+
+.login-error{
+    color: red;
+    font-weight: bold;
+}
+
+a:link {
+    text-decoration: underline;
+  }

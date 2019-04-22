@@ -14,9 +14,11 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { OnBoardingComponent } from './on-boarding/on-boarding.component';
 import { ListStudentsComponent } from './list-students/list-students.component';
 import { DeleteStudentModalComponent } from './delete-student-modal/delete-student-modal.component';
+import { FilterStudentsPipe } from './shared/pipes/filter-students.pipe';
+import { CategoryfilterPipe } from './shared/pipes/categoryfilter.pipe';
 
 @NgModule({
-  declarations: [OnBoardingComponent, ListStudentsComponent, DeleteStudentModalComponent],
+  declarations: [OnBoardingComponent, ListStudentsComponent, DeleteStudentModalComponent, FilterStudentsPipe, CategoryfilterPipe],
   imports: [
     CommonModule,
     ReactiveFormsModule,

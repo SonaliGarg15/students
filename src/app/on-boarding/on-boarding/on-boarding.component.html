@@ -1,68 +1,65 @@
-<div class="container form-container">      
-    <div class="row">        
-      <div class="col-md-6 offset-md-3">
-          <h3 class="form-heading">OnBoarding Form <span *ngIf="isEditForm === true">(Edit)</span> <span *ngIf="isViewForm === true">(View)</span> </h3>
-        <form [formGroup]="onBoardingForm" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-                <mat-form-field class="form-field-full-width">
-                  <input matInput placeholder="Student Id" formControlName="studentId">
-                 </mat-form-field>
-              </div>
-          <div class="form-group">
-            <mat-form-field class="form-field-full-width">
-              <input matInput placeholder="Student Name" formControlName="studentName">
-              <mat-error *ngIf="studentName.errors?.required">Student name is required</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="form-group">
-            <mat-form-field class="form-field-full-width">
-              <mat-label>Category</mat-label>
-              <mat-select formControlName="category">
-                <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>                
-              </mat-select>
-              <mat-error *ngIf="category.errors?.required">Category is required</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="form-group">
-            <mat-form-field class="form-field-full-width">
-              <input matInput [matDatepicker]="picker" placeholder="DOB" formControlName="dateOfBirth">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-              <mat-error *ngIf="dateOfBirth.errors?.required">Date of Birth is required</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="form-group">
-            <mat-form-field class="form-field-full-width">
-              <input matInput placeholder="Father's Name" formControlName="fathersName">
-              <mat-error *ngIf="fathersName.errors?.required">Father's name is required</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="form-group">
-            <mat-form-field class="form-field-full-width">
-              <input matInput placeholder="Mother's Name" formControlName="mothersName">
-              <mat-error *ngIf="mothersName.errors?.required">Mother's name is required</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="form-group">
-            <mat-form-field class="form-field-full-width">
-              <input matInput placeholder="Last Class Score" formControlName="lastClassScore">
-              <mat-error *ngIf="lastClassScore.errors?.required">Last Class Score is required</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="form-group example-section" >
-            <label class="example-margin">Documents:</label>
+<div class="container justify-content-center">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h4 class="form-heading">Onboarding Form <span *ngIf="isEditForm === true">(Edit)</span> <span *ngIf="isViewForm === true">(View)</span>
+      </h4>
+      <form [formGroup]="onBoardingForm" (ngSubmit)="onSubmit()">
+        <div class="form-group student-id-field">
+          <mat-form-field class="form-field-full-width">
+            <input matInput placeholder="Student Id" formControlName="studentId">
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field class="form-field-full-width">
+            <input matInput placeholder="Student Name" formControlName="studentName">
+            <mat-error *ngIf="studentName.errors?.required">Student name is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field class="form-field-full-width">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+              <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="category.errors?.required">Category is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field class="form-field-full-width">
+            <input matInput [matDatepicker]="picker" placeholder="DOB" formControlName="dateOfBirth">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="dateOfBirth.errors?.required">Date of Birth is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field class="form-field-full-width">
+            <input matInput placeholder="Father's Name" formControlName="fathersName">
+            <mat-error *ngIf="fathersName.errors?.required">Father's name is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field class="form-field-full-width">
+            <input matInput placeholder="Mother's Name" formControlName="mothersName">
+            <mat-error *ngIf="mothersName.errors?.required">Mother's name is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field class="form-field-full-width">
+            <input matInput type="number" placeholder="Last Class Score %(marks)" formControlName="lastClassScore">
+            <mat-error *ngIf="lastClassScore.errors?.required">Last Class Score is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group document-section">
+          <label class="document-margin">Documents:</label>
           <label formArrayName="documents" *ngFor="let name of onBoardingForm.controls.documents.controls; let i = index">
-            <mat-checkbox class="example-margin" [formControlName]="i" >{{documents[i].name}}
-                  <div class="asterisk-field" *ngIf="documents[i].mandatory === true">*</div> 
-              </mat-checkbox>                                         
+            <mat-checkbox class="document-margin" [formControlName]="i">{{documents[i].name}}
+              <div class="asterisk-field" *ngIf="documents[i].mandatory === true">*</div>
+            </mat-checkbox>
           </label>
-          </div>
-          <button *ngIf="isViewForm===false" class="btn btn-primary" type="submit" [disabled]="!onBoardingForm.valid">Submit</button>
-          <button *ngIf="isViewForm===true" class="btn btn-primary" (click)="backToListView()">Back to List</button>
-        </form>
-      </div>
+        </div>
+        <button class="btn btn-primary on-boarding-form-button" type="submit" [disabled]="isViewForm || !onBoardingForm.valid">Onboard</button>
+      </form>
     </div>
-  </div> 
-
-
-  
+  </div>
+</div>

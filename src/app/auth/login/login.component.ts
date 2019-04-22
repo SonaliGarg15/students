@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';
+import { LoginResult } from '../../shared/interfaces/loginResult';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +11,14 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  isSubmitted = false;
+  showLoginErrorMessage: string = "show error";
+  isLoginError: boolean = false;
+
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
-
-    if(this.authService.isUserLoggedIn()){
+    //if user is already logged in, then redirect to onboarding form screen.
+    if (this.authService.isUserLoggedIn()) {
       this.router.navigate(['/onboard/form']);
     }
 
@@ -23,17 +26,36 @@ export class LoginComponent implements OnInit {
       userName: ['', Validators.required],
       password: ['', Validators.required]
     });
+
+    //if login error is shown and validation error is there on fields and then if field changes, remove the login error.
+    this.loginForm.valueChanges
+      .subscribe(value => {
+        this.isLoginError = false;
+      });
   }
 
   login() {
-    this.isSubmitted = true;
     if (this.loginForm.invalid) {
       return;
     }
 
-    var isUserLoginSuccessful = this.authService.isLoginSuccessful(this.loginForm.value);
-    if (isUserLoginSuccessful) {
-      this.router.navigateByUrl('/onboard/form');
+    let loginResult: LoginResult = this.authService.isLoginSuccessful(this.loginForm.value);
+    if (loginResult.isLoginSuccessFul) {
+      this.router.navigate(['/onboard/form']);
+    }
+    else { // if login result is not successful, then show the error message on login screen.
+      if (loginResult.passwordIncorrect) {
+        this.isLoginError = true;
+        this.showLoginErrorMessage = "Password is incorrect.";
+        this.loginForm.setErrors({ 'invalid': true });
+        return;
+      }
+      else {
+        this.isLoginError = true;
+        this.showLoginErrorMessage = "User does not exist. Please try again or register.";
+        this.loginForm.setErrors({ 'invalid': true });
+        return;
+      }
     }
   }
 
@@ -47,5 +69,4 @@ export class LoginComponent implements OnInit {
   redirectToRegister() {
     this.router.navigate(['/auth/register']);
   }
-
 }

@@ -1,8 +1,9 @@
-<h1 mat-dialog-title>Delete Studenent</h1>
-<div mat-dialog-content>
+<div class="dialog-container justify-content-center">
+  <div mat-dialog-content>
     <label>Are you sure you want to delete?</label>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
+  </div>
+  <div class="button-section">
+    <button mat-button class="btn btn-primary delete-modal-button" [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
+    <button mat-button class="btn btn-primary delete-modal-button" (click)="onNoClick()">No</button>
+  </div>
 </div>

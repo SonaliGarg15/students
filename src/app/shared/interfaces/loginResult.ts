@@ -1,5 +1,4 @@
 export interface LoginResult{
-    isLoginSuccessFull: boolean,
-    userExists: boolean,
+    isLoginSuccessFul: boolean,
     passwordIncorrect: boolean
 }

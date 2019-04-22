@@ -1,0 +1,9 @@
+.user-name-label{
+    color: white;
+    margin-right: 15px;
+    margin-top: 10px;
+}
+
+.active{
+    font-weight: bolder;
+}

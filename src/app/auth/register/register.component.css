@@ -9,3 +9,16 @@
 .register-header{
     margin-top: 5%;
 }
+
+.register-error{
+    color: red;
+    font-weight: bold;
+}
+
+.registration-button{
+    margin: 30px;
+}
+
+a:link {
+    text-decoration: underline;
+  }

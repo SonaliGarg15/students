@@ -7,15 +7,6 @@ export const documents = [
     { id: 5, name: 'Declaration', mandatory: false }
   ];
 
-export const AllDocuments = [
-    { id: 0, name: 'Domicile' },
-    { id: 1, name: 'Birth Certificate' },
-    { id: 2, name: 'Marksheets'},
-    { id: 3, name: 'Police Clearance'},
-    { id: 4, name: 'Passport' },
-    { id: 5, name: 'Declaration' }
-];
-
 export const INTERNATIONAL_MANADATORY_DOCUMENTS = [0,1,2,3,4,5];
 export const DOMESTIC_MANADATORY_DOCUMENTS = [0,1,2,5];
 
