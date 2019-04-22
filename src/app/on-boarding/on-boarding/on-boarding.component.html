@@ -52,11 +52,14 @@
         </div>
         <div class="form-group document-section">
           <label class="document-margin">Documents:</label>
-          <label formArrayName="documents" *ngFor="let name of onBoardingForm.controls.documents.controls; let i = index">
-            <mat-checkbox class="document-margin" [formControlName]="i">{{documents[i].name}}
-              <div class="asterisk-field" *ngIf="documents[i].mandatory === true">*</div>
-            </mat-checkbox>
-          </label>
+          <ng-container formArrayName="documents">
+            <div *ngFor="let name of onBoardingForm.controls.documents.controls; let i = index" >
+               <mat-checkbox class="document-margin" [formControlName]="i">
+                {{documents[i].name}} <div class="asterisk-field" *ngIf="documents[i].mandatory === true">*</div>
+               </mat-checkbox>
+               <br/>
+            </div>
+         </ng-container>
         </div>
         <button class="btn btn-primary on-boarding-form-button" type="submit" [disabled]="isViewForm || !onBoardingForm.valid">Onboard</button>
       </form>
