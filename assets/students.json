@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "studentName" : "Sonali",
+        "category": 1,
+        "dateOfBirth": "2016-01-01",
+        "fathersName": "Jaswinder",
+        "mothersName": "Jaswinder",
+        "lastClassScore": 99,
+        "documents": [1,2,3]
+    },
+    {
+        "id": 2,
+        "studentName" : "Sonali",
+        "category": 1,
+        "dateOfBirth": "2016-01-01",
+        "fathersName": "Jaswinder",
+        "mothersName": "Jaswinder",
+        "lastClassScore": 99,
+        "documents": [1,2,3]
+    },
+    {
+        "id": 3,
+        "studentName" : "Sonali",
+        "category": 1,
+        "dateOfBirth": "2016-01-01",
+        "fathersName": "Jaswinder",
+        "mothersName": "Jaswinder",
+        "lastClassScore": 99,
+        "documents": [1,2,3]
+    },
+    {
+        "id": 4,
+        "studentName" : "Sonali",
+        "category": 1,
+        "dateOfBirth": "2016-01-01",
+        "fathersName": "Jaswinder",
+        "mothersName": "Jaswinder",
+        "lastClassScore": 99,
+        "documents": [1,2,3]
+    }
+  ]
