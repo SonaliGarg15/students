@@ -1,16 +1,20 @@
 .student-card {
     width: 300px;
     text-align: center;
+    border:2px solid lightgray;
+
   }
   
   .student-header-image {
     background-image: url('https://png.pngtree.com/svg/20170424/c5d418ef9c.svg');
     background-size: cover;
+    margin-bottom: 10px;
   }
 
   .layout-students{
       display: inline-block;
       margin: 20px;
+
   }
 
   .filter-student-input{
@@ -20,6 +24,7 @@
   .students-container{
     margin-top: 5%;
   }
+
 
   .filter-container{
     margin-top: 10px;
@@ -37,4 +42,17 @@
   .no-record-found-text{
     text-align: center;
     font-size: 30px;
+  }
+
+  .card-header{
+    padding-bottom: 0;
+    border: 1px solid lightgrey
+  }
+
+  .category{
+    margin-top: 4%;
+    font-weight: bold;
+    font-family: inherit;
+    color: gray;
+    font-size: 16px;
   }

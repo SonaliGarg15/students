@@ -16,13 +16,13 @@
 
   <div class="container students-container">
       <div *ngFor="let student of students | filterStudents:term | categoryfilter:selected" class='layout-students'>
-        <mat-card [ngStyle]="{'background-color': (student.category === 1)? 'lightcyan' : 'papayawhip'}" class="student-card">
-          <mat-card-header>
+        <mat-card [ngStyle]="{'background-color': (student.category === 1)? '#eeeeee' : '#d0f2ff'}" class="student-card">
+          <mat-card-header class="card-header">
             <div mat-card-avatar class="student-header-image"></div>
             <mat-card-title>{{student.studentName}}</mat-card-title>
           </mat-card-header>
-          <p *ngIf="student.category === 1">Domestic</p>
-          <p *ngIf="student.category === 2">International</p>
+          <p class="category" *ngIf="student.category === 1">Domestic</p>
+          <p class="category" *ngIf="student.category === 2">International</p>
           <mat-card-content class="category-text">
               <table class="key-value-table ux-light-table">
                   <tbody>

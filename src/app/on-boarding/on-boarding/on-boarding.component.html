@@ -48,6 +48,8 @@
           <mat-form-field class="form-field-full-width">
             <input matInput type="number" placeholder="Last Class Score %(marks)" formControlName="lastClassScore">
             <mat-error *ngIf="lastClassScore.errors?.required">Last Class Score is required</mat-error>
+            <mat-error *ngIf="lastClassScore.errors?.min">Last Class Score is invalid</mat-error>
+            <mat-error *ngIf="lastClassScore.errors?.max">Last Class Score cannot be greater than 100</mat-error>
           </mat-form-field>
         </div>
         <div class="form-group document-section">

@@ -41,7 +41,7 @@ export class OnBoardingComponent implements OnInit {
       dateOfBirth: ['', Validators.required],
       fathersName: ['', Validators.required],
       mothersName: ['', Validators.required],
-      lastClassScore: ['', Validators.required],
+      lastClassScore: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
       documents: new FormArray([])
     },
       { validator: DocumentAndCategoryValidator });
